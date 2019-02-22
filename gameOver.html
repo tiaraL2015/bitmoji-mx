@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Game Over</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+        
+        #header-div {
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: url(http://www.bplus.at/wordpress/wp-content/uploads/2017/10/GameOver.png) no-repeat center;
+            position: relative;
+        }
+        
+        .titel-text {
+            color: #fff;
+            font-size: 7em;
+            text-align: center;
+            width: 100%;
+            padding-top: 100px;
+        }
+        
+        .titel-text_2 {
+            color: #fff;
+            font-size: 7em;
+            text-align: center;
+            width: 100%;
+            margin-top: 16%;
+        }
+        
+        .opponentScore {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header-div">
+        <div class="titel-text div_score">Your Score:</div>
+        <div class="titel-text_2 opponentScore">Opponent Score:</div>
+        <a href="/home"><img src="assets/home-icon.png" style="position: absolute; max-height:20%;width:5%;top:0%;cursor: pointer;"></a>
+    </div>
+
+
+    <script type="text/javascript" src='/assets/js/jquery.min.js'></script>
+
+    <script>
+        var uname = sessionStorage.getItem("name");
+        var user_id = sessionStorage.getItem("id");
+
+        var score = getUrlParameter('score');
+        var opponentScore = getUrlParameter('opponentScore');
+
+        $(".div_score").append(score);
+
+        if (opponentScore) {
+            $(".opponentScore").css('display', 'block');
+            $(".opponentScore").append(opponentScore);
+        }
+
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        $.ajax({
+            url: 'proxy/bitmoji-mx/service/score.php',
+            type: 'post',
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                user_id: user_id,
+                score: score
+            },
+            success: function(data, textStatus, jQxhr) {
+                console.log("data", data);
+                if (data.code == 0) {
+
+                } else {
+                    //window.location.href="/";
+                }
+            },
+            error: function(jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    </script>
+</body>
+
+</html>

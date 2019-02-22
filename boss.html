@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    <title>BITMOJ-MX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="bitmoji-mx" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/text-effect.css">
+    <link rel="stylesheet" href="assets/css/home-style.css">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        canvas {
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+
+        .bg {
+            background-image: url("/assets/road6.jpg");
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .div_rel {
+            position: relative;
+        }
+
+        .div_abs {
+            position: absolute;
+        }
+
+        .top_60 {
+            top: 15px;
+        }
+
+        .div_center {
+            text-align: center;
+            width: 100%;
+        }
+
+        .cm h1 {
+            color: white;
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        }
+
+        .ml_txt {
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);
+        }
+
+        .txt_clr {
+            color: cornsilk;
+        }
+
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #f1f1f1;
+            position: absolute;
+            background-size: cover;
+            background-image: url("/assets/road6.jpg");
+            /*top: 310px;*/
+            /* right: 375px;
+
+            height: 100%*/
+        ;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .div_bs {
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+            position: absolute;
+            width: 100%;
+            top: 0%;
+        }
+        .div_boss{
+
+            width: 420px;
+            height: 100px;
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-size: 40px;
+            color: black;
+            margin: auto;
+
+        }
+        /*.imgx {*/
+            /*width: 100%;*/
+            /*height: inherit;*/
+            /*border: 1px solid white;*/
+        /*}*/
+
+    </style>
+</head>
+
+<body>
+
+<span class="span" id="score" style="position: absolute;left:65%;top:2%;font-size:30px;">0</span>
+<span class="span2" id="name">Level: <span id="level">1</span></span>
+<span class="span3" id="lives" style="position: absolute;left:32%;font-size:30px;"> x <span id="number">3</span></span>
+
+<span class="span" id="home" style="position:absolute;"><a href="/home"><img src="/assets/home.png" width="48" height="48"></a></span>
+<span class="span countdown" id="countdown"  style="position:absolute;top: 0;left: 90%;font-size: 30px;"></span>
+<img id="img_timer" src="assets/images/timer.png" style="position:absolute;top: 0;max-height: 50px;left: 96%; "/>
+<img id="canvas" class="imgx">
+<img id="boss" src="/assets/boss1.png" class="boss" style="position:absolute; top:70%; right: 2%; max-width: 20%">
+<div class="div_bs" style="font-size: 20px; text-align: center;">BOSS LEVEL</div>
+<div class="div_boss">
+    <img src="/assets/boss1.png" style="height: 114px; margin-left: 15%">
+    <br><hr/>
+    Entering In Boss Level
+</div>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src='/assets/js/jquery.min.js'></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/boss.js?v=1"></script>
+<script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#boss").hide();
+        $("#number").hide();
+        $("#home").hide();
+        $("#lives").hide();
+        $(".div_bs").hide();
+        $("#score").hide();
+        $("#img_timer").hide();
+        $("#name").hide();
+        $("#canvas").hide();
+        function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                    tmp = item.split("=");
+                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
+        }
+        var char = findGetParameter("char");
+        var coins = findGetParameter("coins");
+        var score = findGetParameter("score");
+
+        /* Define function for escaping user input to be treated as
+         a literal string within a regular expression */
+        function escapeRegExp(string){
+            return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        }
+
+        /* Define functin to find and replace specified term with replacement string */
+        function replaceAll(str, term, replacement) {
+            return str.replace(new RegExp(escapeRegExp(term), 'g'), replacement);
+        }
+        $(window).load(function() {
+            char = replaceAll(char, "'", '');
+            coins = replaceAll(coins, "'", '');
+            score = replaceAll(score, "'", '');
+
+            console.log("char->get",char);
+            console.log("coins->get",score);
+            setTimeout(function(){
+                $("#boss").show();
+                $("#number").show();
+                $("#home").show();
+                $("#lives").show();
+                $(".div_bs").show();
+                $("#score").show();
+                $("#img_timer").show();
+                $("#name").show ();
+                $(".div_boss").hide();
+                $("#canvas").show();
+                singlePlayer(char,coins,score)
+            }, 5000);
+
+
+        });
+    });
+//    $(function () {
+//        function findGetParameter(parameterName) {
+//            var result = null,
+//                tmp = [];
+//            location.search
+//                .substr(1)
+//                .split("&")
+//                .forEach(function (item) {
+//                    tmp = item.split("=");
+//                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+//                });
+//            return result;
+//        }
+//        var char = findGetParameter("char");
+//        var coins = findGetParameter("coins");
+//
+//        console.log("char->get",char);
+//        console.log("coins->get",coins);
+//        setTimeout(singlePlayer(char.toString(),"'"+coins+"'"), 9000);
+//
+//
+//    });
+</script>
+</body>
+
+</html>

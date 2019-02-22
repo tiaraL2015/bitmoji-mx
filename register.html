@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    <title>Sign Up - Bitmoji-Mx</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="bitmoji-mx" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <style>
+        .c_mg {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="padding-all">
+        <div class="header">
+            <h1><img src="assets/images/5.png" alt="icon">BITMOJI-MX</h1>
+        </div>
+
+        <div class="design-w3l">
+            <div class="mail-form-agile">
+                <form class="reg-form" id="reg-form">
+                    <input type="text" name="name" placeholder="User Name" class="name" required/>
+                    <input type="text" name="email" placeholder="Email Id" class="c_mg email" required/>
+                    <input type="password" name="password" class="c_mg pwd" placeholder="Password" required/>
+                    <input type="password" name="cpassword" class="c_mg c_pwd" placeholder="Confirm Password" required/>
+
+                    <input class="btn_reg" class="c_mg" style="margin-top: 15px;" type="submit" value="submit"></input>
+                </form>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="txt_err" style="font-size:11px; color:#cc0000; margin-top:10px"></div>
+
+        <div class="footer">
+            <a href="/" style="color: white;">Login</a>
+        </div>
+    </div>
+    <script src='assets/js/jquery.min.js'></script>
+    <script src="assets/js/monetization.js" type="text/javascript"></script>
+    <script>
+        $(document).on('click', '.btn_reg', function(e) {
+            e.preventDefault();
+
+            var password = $(".pwd").val();
+            var confirmPassword = $(".c_pwd").val();
+            var emailaddress = $(".email").val();
+            var uname = $(".name").val();
+            var email_txt = emailaddress.split("@");
+            //        min 1 uppaercase
+            //        min 1 lowercase
+            //        min 1 special char
+            //        and min 1 integer
+            var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{6,12}$/;
+
+            if ($(".name").val() == "") {
+                alert("Name must be filled out");
+                return false;
+            } else if ($(".email").val() == "") {
+                alert("Email must be filled out");
+                return false;
+            } else if ($(".pwd").val() == "") {
+                alert("Password must be filled out");
+                return false;
+            } else if ($(".c_pwd").val() == "") {
+                alert("Confirm Password must be filled out");
+                return false;
+            } else if (password != confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            } else if (uname.length < 5) {
+                alert("Username is too short,enter more than 6 characters");
+                return false;
+            } else if (uname.length > 50) {
+                alert("Username is too long");
+                return false;
+            } else if (uname.search(/\d/) == -1) {
+                alert("Username must include number");
+                return false;
+            } else if (uname.search(/[a-zA-Z]/) == -1) {
+                alert("Username must include any alphabet");
+                return false;
+            } else if (uname.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+\.\,\;\:]/) != -1) {
+                alert("bad_char");
+                return false;
+            } else if (!validateEmail(emailaddress)) {
+                alert("Enter valid email id");
+                return false
+            } else if (email_txt[0].length > 8 && email_txt[0].search(/[a-zA-Z]/) == -1) {
+                alert("Email id must include any character");
+                return false
+            } else if (password.length < 6) {
+                alert("Password is too short,enter more than 6 characters");
+                return false;
+            } else if (!regex.test(password)) {
+                alert("Password strength is not good.");
+            } else {
+                $.ajax({
+                    url: 'proxy/bitmoji-mx/service/register.php',
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: $(".reg-form").serialize(),
+                    success: function(data, textStatus, jQxhr) {
+                        console.log("data", data);
+                        if (data.code == 0) {
+                            alert(data.msg);
+                        } else {
+                            window.location.href = "/";
+                        }
+                    },
+                    error: function(jqXhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+        });
+
+        function validateEmail($email) {
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            return emailReg.test($email);
+        }
+    </script>
+</body>
+
+</html>

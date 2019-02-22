@@ -1,0 +1,26 @@
+{
+  "name": "bitmoji-mx",
+  "version": "0.0.1",
+  "description": "What am I about?",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-http-proxy": "^1.4.0",
+    "socket.io": "^2.0.1"
+  },
+  "engines": {
+    "node": "6.10.x"
+  },
+  "repository": {
+    "url": ""
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}

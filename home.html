@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    <title>BITMOJ-MX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="bitmoji-mx" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/text-effect.css">
+    <link rel="stylesheet" href="assets/css/home-style.css">
+    <style>
+        .img_rotate {
+            -ms-transform: rotate(-10deg);
+            /* IE 9 */
+            -webkit-transform: rotate(-10deg);
+            /* Safari 3-8 */
+            transform: rotate(-10deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Last Five High Scores List</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Score</th>
+                                    <th class="text-center">Date & Time</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbl_body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bg div_rel div_main"></div>
+
+    <div class="row div_abs top_60 div_center div_main">
+        <div class="header">
+            <div class="animate one">
+                <span>B</span><span>I</span><span>T</span><span>M</span>
+                <span>O</span><span>J</span><span>I</span><span>-</span><span>M</span><span>X</span>
+            </div>
+        </div>
+        <div>
+            <span style="font-size: 16px;color: black;">Welcome <strong class="c_user"></strong> to BITMOJI-MX World </span>
+
+            <div style="margin-top: 8px;"><span style="font-size: 16px;color: black;"><a class="a_click a_click_score"
+                                                                                     style="border: none;">Click Here</a> to see your high score</span>
+            </div>
+
+            <div class="row div_player">
+                <span class="cm">
+					<h1> CHOOSE MODE </h1>
+				</span>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <img src="/assets/harsh.png" style="height:188px;width:153px;cursor:pointer;" class="single">
+                        <h2 class="ml_txt txt_clr">Single Player</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/assets/ml.png" style="height:188px;cursor:pointer;" class="multiple">
+                        <h2 class="ml_txt txt_clr">Multi Player</h2>
+                    </div>
+                </div>
+                <span class="cm">
+					<h1 class="h1_clk" style="cursor: pointer">CREDITS</h1>
+				</span>
+            </div>
+
+            <div class="row div_character">
+                <span class="cm">
+					<h1> SELECT CHARACTER </h1>
+				</span>
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <img src="/assets/harsh.png" style="height:188px;width:153px;cursor:pointer;" class="1">
+                        <h2 class="ml_txt txt_clr">1</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/assets/2.png" style="height:188px;cursor:pointer;" class="2">
+                        <h2 class="ml_txt txt_clr">2</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/assets/3.png" style="height:188px;cursor:pointer; " class="3 img_rotate">
+                        <h2 class="ml_txt txt_clr">3</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row div_room">
+                <span class="cm">
+					<h1> SELECT ROOM </h1>
+				</span>
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <img src="/assets/mul.png" style="height:188px;cursor:pointer;" class="room_1">
+                        <h2 class="ml_txt txt_clr">Room 1</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/assets/mul2.png" style="height:188px;cursor:pointer;" class="room_2">
+                        <h2 class="ml_txt txt_clr">Room 2</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/assets/mul.png" style="height:188px;cursor:pointer; " class="room_3 ">
+                        <h2 class="ml_txt txt_clr">Room 3</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/" style="position: absolute; top:0; right: 15px; cursor: pointer; border: none;">
+            <img src="assets/logout.png" style="max-height:70px; ">
+        </a>
+
+        <a href="/rules" style="position: absolute; top:0; left: 15px; cursor: pointer; border: none;">
+            <img src="assets/help.svg" style="max-height:70px; ">
+        </a>
+    </div>
+    <span class="span" id="score" style="position: absolute;left:65%;top:2%;font-size:30px;">0</span>
+    <span class="span2" id="name">Level: <span id="level">1</span></span>
+    <span class="span3" id="lives" style="position: absolute;left:32%;font-size:30px;"> x <span id="number">3</span></span>
+
+    <span class="span" id="home" style="position:absolute;"><a href="/home"><img src="/assets/home.png" width="48"
+                                                                             height="48"></a></span>
+    <span class="span countdown" id="countdown" style="position:absolute;top: 0;left: 90%;font-size: 30px; display: none;"></span>
+    <img id="img_timer" src="assets/images/timer.png" style="position:absolute;top: 0;max-height: 50px;left: 96%; " />
+    <img id="canvas" class="imgx" border="2" alt="The Scream" shape="rect" USEMAP="#name1" BORDER=0 coords="50,50,600,500" style="position:absolute; top:310px; right: 400px;">
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src='/assets/js/jquery.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/singleplayer.js?v=1"></script>
+    <script type="text/javascript" src="/assets/js/multiplayer.js"></script>
+    <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+    <script>
+        $(function() {
+
+            $(".div_room").hide()
+            $("#img_timer").hide();
+            let uname = sessionStorage.getItem("name");
+            let user_id = sessionStorage.getItem("id");
+            let arr_score = [];
+            $.ajax({
+                url: 'proxy/bitmoji-mx/service/lastScore.php',
+                type: 'post',
+                contentType: 'application/x-www-form-urlencoded',
+                data: {
+                    user_id: user_id
+                },
+                success: function(data, textStatus, jQxhr) {
+                    console.log("data", data);
+                    arr_score.push(data.data);
+                    if (data.code == 0) {
+
+                    } else {
+                        window.location.href = "/";
+                    }
+                },
+                error: function(jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+            if (uname) {
+                $(".c_user").html(uname);
+
+            } else {
+                window.location.href = "/";
+            }
+            let isMultiple = false;
+            $(".div_character").hide();
+            $("#score").hide();
+            $("#name").hide();
+            $("#lives").hide();
+            $("#canvas").hide();
+            $("#home").hide();
+            $('.repeat').click(function() {
+                var classes = $(this).parent().attr('class');
+                $(this).parent().attr('class', 'animate');
+                var indicator = $(this);
+                setTimeout(function() {
+                    $(indicator).parent().addClass(classes);
+                }, 20);
+            });
+
+            $(document).on('click', '.single', function() {
+                hideDivplayer();
+            });
+
+            $(document).on('click', '.multiple', function() {
+                hideDivplayer();
+                isMultiple = true;
+                //$(".div_main").hide();
+                //showgameDetails();
+            });
+            let char = "";
+            $(document).on('click', '.1', function() {
+
+                if (!isMultiple) {
+                    $(".div_main").hide();
+                    showgameDetails();
+                    singlePlayer("/assets/harsh.png", "/assets/harsh-coin.png");
+                } else {
+                    // showgameDetails();
+                    $(".div_character").hide();
+                    char = "/assets/harsh.png";
+                    $(".div_room").show()
+
+                    //  multiPlayer("/assets/harsh.png","/assets/harsh-coin.png");
+                }
+
+            });
+            $(document).on('click', '.2', function() {
+
+                if (!isMultiple) {
+                    $(".div_main").hide();
+                    showgameDetails();
+                    singlePlayer("/assets/2.png", "/assets/tiara-coin.png");
+                } else {
+                    // showgameDetails();
+                    $(".div_character").hide();
+                    char = "/assets/2.png";
+
+                    $(".div_room").show()
+
+                    // multiPlayer("/assets/2.png","/assets/tiara-coin.png");
+                }
+            });
+            $(document).on('click', '.3', function() {
+                if (!isMultiple) {
+                    $(".div_main").hide();
+
+                    showgameDetails();
+                    singlePlayer("/assets/3.png", "/assets/tiara-coin.png");
+                } else {
+                    // showgameDetails();
+                    $(".div_character").hide();
+                    char = "/assets/3.png";
+
+                    $(".div_room").show()
+
+                    // multiPlayer("/assets/3.png","/assets/tiara-coin.png");
+                }
+            });
+
+            $(document).on('click', '.room_1', function() {
+                $(".div_main").hide();
+                //$(".div_room").show()
+                showgameDetails();
+                multiPlayer(char, "/assets/tiara-coin.png", "room1");
+
+            });
+            $(document).on('click', '.room_2', function() {
+                $(".div_main").hide();
+
+                //$(".div_room").show()
+                showgameDetails();
+                multiPlayer(char, "/assets/tiara-coin.png", "room2");
+
+            });
+            $(document).on('click', '.room_3', function() {
+                $(".div_main").hide();
+                $(".div_room").show()
+                showgameDetails();
+                multiPlayer(char, "/assets/tiara-coin.png", "room3");
+
+            });
+
+            if (isMultiple == true) {
+
+            }
+
+            function hideDivplayer() {
+                $(".div_player").hide();
+                $(".div_character").show();
+            }
+
+            function showgameDetails() {
+                $("#score").show();
+                $("#name").show();
+                $("#lives").show();
+                $("#canvas").show();
+                $("#home").show();
+            }
+
+            $(document).on("click", '.a_click', function() {
+                $("#myModal").modal('show');
+                console.log("arr_score", arr_score);
+                var html = "";
+                for (var i = 0; i < arr_score[0].length; i++) {
+                    html += '<tr>';
+                    html += '<td>';
+                    html += arr_score[0][i].score;
+                    html += '</td>';
+                    html += '<td>';
+                    html += arr_score[0][i].created_at;
+                    html += '</td>';
+                    html += '</tr>';
+                }
+                $(".tbl_body").append(html);
+            });
+            $(document).on("click", ".h1_clk", function() {
+                window.location.href = "/assets/credit/credit.html"
+            });
+        });
+    </script>
+</body>
+
+</html>
